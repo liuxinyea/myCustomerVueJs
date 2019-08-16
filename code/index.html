@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MY_MVVM</title>
+    <script src="my_vue.js"></script>
+    <script src="Dep.js"></script>
+    <script src="Watcher.js"></script>
+    <script src="Compile.js"></script>
+</head>
+<body>
+  <div id="my_vue">
+      <input v-model="message" />
+      <span>{{message}}</span>
+      <span>{{data}}</span>
+      <button onclick="add()">递增</button>
+  </div>
+</body>
+<script>
+    // let data={
+    //     message:1
+    // };
+    let vm=new MVVM({
+        el:'my_vue',
+        data:{
+            message:22,
+            data:100
+        },
+
+    });
+    function add() {
+        vm.$data.message++;
+    }
+</script>
+</html>

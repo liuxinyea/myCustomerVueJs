@@ -1,11 +1,12 @@
-
+/*观察者，订阅者*/
 class Watcher{
+    static uId=0;
     constructor(vm,key,callback){
         this._cb = callback;
         this._vm = vm;
         this._key = key;   //保存键值
-        this._uid = uId;
-        uId++; //每个观察者配个ID，防止重复添加
+        this._uid = Watcher.uId;
+        Watcher.uId++; //每个观察者配个ID，防止重复添加
         Dep.Target=this;
         //vm[exp] 就会触发get，将当前Watcher对象添加到dep的依赖集合中
         this._value = vm[key];

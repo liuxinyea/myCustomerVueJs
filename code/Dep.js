@@ -6,6 +6,7 @@ class Dep{
     }
     add(watcher){
         this.subs.push(watcher)
+        console.log(this.subs);
     }
 
     notify(){
