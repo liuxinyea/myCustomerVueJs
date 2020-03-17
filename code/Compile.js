@@ -23,8 +23,10 @@ class Compile {
             if(reg.test(text)){
                 //如果这个元素是{{}}这种格式
                 let key = RegExp.$1;
-                node.textContent =  this._vm[key];
-                new Watcher(this._vm,key,val=>{
+                let keys=key.split('.');  
+                // node.textContent =  this._vm[key];
+                node.textContent =this.getValue(this._vm,keys);                
+                new Watcher(this._vm,key[0],val=>{
                     node.textContent =  val;
                 })
             }
@@ -45,5 +47,12 @@ class Compile {
             })
         }
     }
-
+    getValue(vm,keys){
+        if(keys.length==1){
+            return vm[keys[0]];
+        }
+        vm=vm[keys[0]];
+        keys.shift();
+        return this.getValue(vm,keys);
+    }
 }

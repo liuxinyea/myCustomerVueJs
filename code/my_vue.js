@@ -31,14 +31,36 @@ function defineReactive(data, key, val) {
         }
     })
 }
+function observeByProxy(data){
+   if(typeof data == 'object'){
+       let dep = new Dep();
+      data=new Proxy(data,{
+           get(target,key,receiver){
+               Dep.Target && dep.add(Dep.Target); //添加观察者
+               return target[key]
+           },
+           set(target,key,value,receiver){
+               target[key]=value;
+               console.log(key+"---"+value);
+               dep.notify();
+               return true;
+           }
+       })
+       return data;
+       Object.keys(data).forEach(key=>{
+            observeByProxy(data[key])
+       })
+   }
+}
 /*响应式实例*/
 class MVVM{
     constructor(options){
         this._options=options;
-        let data=this._data=options.data;
-        observe(data);
+        this._data=options.data;
+        options.data=observeByProxy(options.data);
         let dom=document.getElementById(options.el);
         new Compile(dom,options.data);
-        this.$data=data;
+        this.$data=options.data;
+        // console.log(this.$data);
     }
 }

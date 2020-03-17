@@ -13,6 +13,7 @@
       <input v-model="message" />
       <span>{{message}}</span>
       <span>{{data}}</span>
+      <span>{{ob.text}}</span>
       <button onclick="add()">递增</button>
   </div>
 </body>
@@ -24,12 +25,18 @@
         el:'my_vue',
         data:{
             message:22,
-            data:100
+            data:100,
+            ob:{
+                text:"ceshi 对象"
+            }
         },
 
     });
     function add() {
         vm.$data.message++;
+        vm.$data.ob={text:"11111111"};
+        console.log(vm.$data);
+        
     }
 </script>
 </html>
